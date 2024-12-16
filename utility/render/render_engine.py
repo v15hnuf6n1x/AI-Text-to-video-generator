@@ -10,6 +10,7 @@ from moviepy.audio.fx.audio_loop import audio_loop
 from moviepy.audio.fx.audio_normalize import audio_normalize
 import requests
 
+
 def download_file(url, filename):
     with open(filename, 'wb') as f:
         headers = {
@@ -55,7 +56,7 @@ def get_output_media(audio_file_path, timed_captions, background_video_data, vid
     audio_clips.append(audio_file_clip)
 
     for (t1, t2), text in timed_captions:
-        text_clip = TextClip(txt=text, fontsize=100, color="white", stroke_width=3, stroke_color="black", method="label")
+        text_clip = TextClip(font='DripOctober-vm0JA.ttf', txt=text, fontsize=70, color="white", stroke_width=10, stroke_color="black", method="label")
         text_clip = text_clip.set_start(t1)
         text_clip = text_clip.set_end(t2)
         text_clip = text_clip.set_position(["center", 800])
