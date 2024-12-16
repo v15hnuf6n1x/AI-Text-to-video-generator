@@ -20,28 +20,31 @@ if __name__ == "__main__":
     SAMPLE_TOPIC = args.topic
     SAMPLE_FILE_NAME = "audio_tts.wav"
     VIDEO_SERVER = "pexel"
+    
+    try:
+        response = generate_script(SAMPLE_TOPIC)
+        print("script: {}".format(response))
+        print(f"{'-'*6}script end {'-'*6}")
 
-    response = generate_script(SAMPLE_TOPIC)
-    print("script: {}".format(response))
-    print(f"{'-'*6}script end {'-'*6}")
+        asyncio.run(generate_audio(response, SAMPLE_FILE_NAME))
 
-    asyncio.run(generate_audio(response, SAMPLE_FILE_NAME))
+        timed_captions = generate_timed_captions(SAMPLE_FILE_NAME)
+        print(f"Timed Caption:\n\n {timed_captions}\n\n{'-'*5}timed caption end {'-'*6}")
+    
+        search_terms = getVideoSearchQueriesTimed(response, timed_captions)
+        print(f"search terms are:\n\n{search_terms}\n\n{'_'*25}")
 
-    timed_captions = generate_timed_captions(SAMPLE_FILE_NAME)
-    print(f"Timed Caption:\n\n {timed_captions}\n\n{'-'*5}timed caption end {'-'*6}")
-
-    search_terms = getVideoSearchQueriesTimed(response, timed_captions)
-    print(f"search terms are:\n\n{search_terms}\n\n{'_'*25}")
-
-    background_video_urls = None
-    if search_terms is not None:
-        background_video_urls = generate_video_url(search_terms, VIDEO_SERVER)
-        print(background_video_urls)
-    else:
-        print("No background video")
+        background_video_urls = None
+        if search_terms is not None:
+            background_video_urls = generate_video_url(search_terms, VIDEO_SERVER)
+            print(background_video_urls)
+        else:
+            print("No background video")
     
 
-    background_video_urls = merge_empty_intervals(background_video_urls)
+        background_video_urls = merge_empty_intervals(background_video_urls)
+    except Exception as e:
+        print(f"Error occured :\n\n{e}\n\n{'-'*25}")
 
     if background_video_urls is not None:
         video = get_output_media(SAMPLE_FILE_NAME, timed_captions, background_video_urls, VIDEO_SERVER)
