@@ -24,15 +24,15 @@ if __name__ == "__main__":
     try:
         response = generate_script(SAMPLE_TOPIC)
         print("script: {}".format(response))
-        print(f"{'-'*6}script end {'-'*6}")
+        print(f"{'-'*6}script end {'-'*6}\n\n")
 
         asyncio.run(generate_audio(response, SAMPLE_FILE_NAME))
 
         timed_captions = generate_timed_captions(SAMPLE_FILE_NAME)
-        print(f"Timed Caption:\n\n {timed_captions}\n\n{'-'*5}timed caption end {'-'*6}")
+        print(f"Timed Caption:\n\n {timed_captions}\n\n{'-'*5}timed caption end {'-'*6}\n\n")
     
         search_terms = getVideoSearchQueriesTimed(response, timed_captions)
-        print(f"search terms are:\n\n{search_terms}\n\n{'_'*25}")
+        print(f"search terms are:\n\n{search_terms}\n\n{'_'*25}\n\n")
 
         background_video_urls = None
         if search_terms is not None:
