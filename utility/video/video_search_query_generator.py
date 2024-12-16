@@ -20,30 +20,24 @@ log_directory = ".logs/gpt_logs"
 
 prompt = """# Instructions
 
-Given the following video script and timed captions, your task is to extract **three visually rich and dynamic keywords** for each time segment. These keywords will help search for background videos that bring the captions to life. 
+Given the following video script and timed captions, extract three visually concrete and specific keywords for each time segment that can be used to search for background videos. The keywords should be short and capture the main essence of the sentence. They can be synonyms or related terms. If a caption is vague or general, consider the next timed caption for more context. If a keyword is a single word, try to return a two-word keyword that is visually concrete. If a time frame contains two or more important pieces of information, divide it into shorter time frames with one keyword each. Ensure that the time periods are strictly consecutive and cover the entire length of the video. Each keyword should cover between 2-4 seconds. The output should be in JSON format, like this: [[[t1, t2], ["keyword1", "keyword2", "keyword3"]], [[t2, t3], ["keyword4", "keyword5", "keyword6"]], ...]. Please handle all edge cases, such as overlapping time segments, vague or general captions, and single-word keywords.
 
-### Key Requirements:
-1. **Visual Creativity**: Choose keywords that evoke vivid imagery. Instead of generic terms like "car" or "dog," opt for "sleek sports car" or "golden retriever running."
-2. **Context-Aware**: If a caption is vague or general, analyze the next one for better context.
-3. **Split Complex Captions**: If a time frame contains multiple ideas, split it into smaller segments with keywords for each. Ensure time segments are consecutive.
-4. **Engaging Descriptions**: Use synonyms or related terms to make the keywords dynamic. If a keyword is just one word, expand it to a short phrase for richer visual meaning.
-5. **Strict Timing**: Ensure that each segment spans 2-4 seconds and covers the entire video without overlaps.
+For example, if the caption is 'The cheetah is the fastest land animal, capable of running at speeds up to 75 mph', the keywords should include 'cheetah running', 'fastest animal', and '75 mph'. Similarly, for 'The Great Wall of China is one of the most iconic landmarks in the world', the keywords should be 'Great Wall of China', 'iconic landmark', and 'China landmark'.
 
-### Examples:
-1. For the caption, *"The cheetah is the fastest land animal, capable of running at speeds up to 75 mph"*, use:
-   - ["cheetah sprinting", "fastest animal", "blazing speed"].
-2. For the caption, *"The Great Wall of China is one of the most iconic landmarks in the world"*, use:
-   - ["Great Wall sunset", "historic landmark", "China aerial view"].
+Important Guidelines:
 
-### Output Format:
-Your output should be in a strict JSON format, as follows:
-```json
-[
-  [[t1, t2], ["keyword1", "keyword2", "keyword3"]],
-  [[t2, t3], ["keyword4", "keyword5", "keyword6"]],
-  ...
-]
-"""
+Use only English in your text queries.
+Each search string must depict something visual.
+The depictions have to be extremely visually concrete, like rainy street, or cat sleeping.
+'emotional moment' <= BAD, because it doesn't depict something visually.
+'crying child' <= GOOD, because it depicts something visual.
+The list must always contain the most relevant and appropriate query searches.
+['Car', 'Car driving', 'Car racing', 'Car parked'] <= BAD, because it's 4 strings.
+['Fast car'] <= GOOD, because it's 1 string.
+['Un chien', 'une voiture rapide', 'une maison rouge'] <= BAD, because the text query is NOT in English.
+
+Note: Your response should be the response only and no extra text or data.
+  """
 
 def fix_json(json_str):
     # Replace typographical apostrophes with straight quotes
