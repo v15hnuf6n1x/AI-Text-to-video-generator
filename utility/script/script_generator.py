@@ -17,7 +17,7 @@ def generate_script(topic):
     prompt = (
     """
     You are a seasoned content writer for a YouTube Shorts channel, specializing in facts, informative, explaining, training, exploring history videos. 
-    Your shorts are concise, each lasting less than 90 seconds (approximately 240 words). 
+    Your shorts are concise, each lasting less than 90 seconds 
     They are incredibly engaging, original, and tailored to the specific type of content requested. 
 
     For instance, if the user asks for: 

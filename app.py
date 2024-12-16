@@ -23,14 +23,15 @@ if __name__ == "__main__":
 
     response = generate_script(SAMPLE_TOPIC)
     print("script: {}".format(response))
+    print(f"{'-'*6}script end {'-'*6}")
 
     asyncio.run(generate_audio(response, SAMPLE_FILE_NAME))
 
     timed_captions = generate_timed_captions(SAMPLE_FILE_NAME)
-    print(timed_captions)
+    print(f"Timed Caption:\n\n {timed_captions}\n\n{'-'*5}timed caption end {'-'*6}")
 
     search_terms = getVideoSearchQueriesTimed(response, timed_captions)
-    print(search_terms)
+    print(f"search terms are:\n\n{search_terms}\n\n{'_'*25}")
 
     background_video_urls = None
     if search_terms is not None:
@@ -38,6 +39,7 @@ if __name__ == "__main__":
         print(background_video_urls)
     else:
         print("No background video")
+    
 
     background_video_urls = merge_empty_intervals(background_video_urls)
 
