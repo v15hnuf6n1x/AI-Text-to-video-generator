@@ -73,7 +73,7 @@ def get_output_media(audio_file_path, timed_captions, background_video_data, vid
     width = (in_width if type(in_width)=='int' else 5)
 
     bg = str(input('Enter the colour for text bg color [case sensitive]: '))
-    bgc = (bg if bg in avl_color else None)
+    bgc = (bg if bg in avl_color else 'transparent')
     for (t1, t2), text in timed_captions:
         text_clip = TextClip(font=c_font, txt=text, fontsize=100, color=c_color, stroke_width=width,stroke_color=stroke, method="label", bg_color=bgc)
         text_clip = text_clip.set_start(t1)
