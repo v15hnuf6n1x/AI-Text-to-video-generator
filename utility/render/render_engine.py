@@ -54,9 +54,28 @@ def get_output_media(audio_file_path, timed_captions, background_video_data, vid
     audio_clips = []
     audio_file_clip = AudioFileClip(audio_file_path)
     audio_clips.append(audio_file_clip)
+    
+    #for supported fonts `print(TextClip.list("font"))`
+    #for supported colors `print(TextClip.list("color"))`
+    avl_fnt = (TextClip.list("font"))
+    print('\nAVAILLAIBLE FONTS: ',avl_fnt,'\n')
+    g_font = str(input('Enter The Font Name [case sensitive] : '))
+    c_font = (g_font if g_font in avl_fnt else 'AvantGarde-Demi')
 
+    avl_color = (TextClip.list("color"))
+    print('\nAVAILLAIBLE COLORS: ',avl_color,'\n')
+    g_colr = str(input('Enter The Color Name [case sensitive] : '))
+    c_color = (g_colr if g_colr in avl_color else 'white')
+
+    sto = str(input('Enter the colour for text stroke [case sensitive]: '))
+    stroke = (sto if sto in avl_color else 'black')
+    in_width = (input('Enter the width of stroke[int]: ')) 
+    width = (in_width if type(in_width)=='int' else 5)
+
+    bg = str(input('Enter the colour for text bg color [case sensitive]: '))
+    bgc = (bg if bg in avl_color else None)
     for (t1, t2), text in timed_captions:
-        text_clip = TextClip(font='./DripOctober-vm0JA.ttf', txt=text, fontsize=100, color="white", stroke_width=2, stroke_color="black", method="label")
+        text_clip = TextClip(font=c_font, txt=text, fontsize=100, color=c_color, stroke_width=width,stroke_color=stroke, method="label", bg_color=bgc)
         text_clip = text_clip.set_start(t1)
         text_clip = text_clip.set_end(t2)
         text_clip = text_clip.set_position(["center", 800])
