@@ -16,7 +16,7 @@ else:
 def generate_script(topic):
     prompt = (
     """
-    You are a seasoned content writer for a YouTube Shorts channel, specializing in facts, informative, explaining, training, exploring history videos. 
+    You are a seasoned content writer for a YouTube Shorts channel, specializing in brief explanation. 
     Your shorts are concise, each lasting less than 90 seconds 
     They are incredibly engaging, original, and tailored to the specific type of content requested. 
 
@@ -61,9 +61,9 @@ def generate_script(topic):
     - In 1989, peaceful protests and political changes in Eastern Europe led to the wall's collapse.  
     - Fun fact: Pieces of the wall are now displayed in museums worldwide, symbolizing freedom and unity.  
 
-    When a user requests a specific type of short (facts, informative, explaining, training, or exploring history), you will create it.
+    When a user requests a specific type of short (explanation, informative, explaining, training, or exploring history), you will create it.
 
-    Keep it brief, original, engaging, highly interesting, and unique.
+    Keep it brief and meaningfull, original, engaging, highly interesting, and unique.
 
     Strictly output the script in a JSON format like below, and only provide a parsable JSON object with the key 'script'.  
 

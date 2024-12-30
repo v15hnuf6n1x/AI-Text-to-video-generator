@@ -15,24 +15,20 @@ import argparse
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate a video from a topic.")
     parser.add_argument("topic", type=str, help="The topic for the video")
-
+    
     args = parser.parse_args()
-    SAMPLE_TOPIC = args.topic
-    SAMPLE_FILE_NAME = "audio_tts.wav"
+    SAMPLE_TOPIC = str(input("Enter the topic of your content: "))
+    SAMPLE_FILE_NAME = str(input("Enter the name for audio file: "))
     VIDEO_SERVER = "pexel"
     
     try:
         response = generate_script(SAMPLE_TOPIC)
-        print("script: {}".format(response))
-        print(f"{'-'*6}script end {'-'*6}\n\n")
 
         asyncio.run(generate_audio(response, SAMPLE_FILE_NAME))
 
         timed_captions = generate_timed_captions(SAMPLE_FILE_NAME)
-        print(f"Timed Caption:\n\n {timed_captions}\n\n{'-'*5}timed caption end {'-'*6}\n\n")
     
         search_terms = getVideoSearchQueriesTimed(response, timed_captions)
-        print(f"search terms are:\n\n{search_terms}\n\n{'_'*25}\n\n")
 
         background_video_urls = None
         if search_terms is not None:
@@ -40,11 +36,9 @@ if __name__ == "__main__":
             print(background_video_urls)
         else:
             print("No background video")
-    
-
         background_video_urls = merge_empty_intervals(background_video_urls)
     except Exception as e:
-        print(f"Error occured :\n\n{e}\n\n{'-'*25}")
+        print(f"ERROR OCCURED : {e}\n")
 
     if background_video_urls is not None:
         video = get_output_media(SAMPLE_FILE_NAME, timed_captions, background_video_urls, VIDEO_SERVER)
